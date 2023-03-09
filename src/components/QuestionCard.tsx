@@ -1,14 +1,15 @@
+import { AnswerObject } from "../App";
 
-type Props={
-   question:string,
-   answers:string[],
-   callback:any,
-   userAnswer:any,
-   questionNr:number,
-   totalQuestions:number
+type Props = {
+   question: string,
+   answers: string[],
+   callback: (e:React.MouseEvent<HTMLButtonElement>)=>void,
+   userAnswer: AnswerObject | undefined,
+   questionNr: number,
+   totalQuestions: number
 }
 
-const QuestionCard:React.FC<Props>=(
+const QuestionCard: React.FC<Props> = (
    {
       question,
       answers,
@@ -17,16 +18,16 @@ const QuestionCard:React.FC<Props>=(
       questionNr,
       totalQuestions
    }
-)=>{
+) => {
    return (
       <div>
          <p className="number">Question: {questionNr} / {totalQuestions} </p>
-         <p dangerouslySetInnerHTML={{__html:question}}></p>
+         <p dangerouslySetInnerHTML={{ __html: question }}></p>
          <div>
-            {answers.map(answer=>(
-               <div>
-                  <button disabled={userAnswer} onClick={callback}>
-                     <span dangerouslySetInnerHTML={{__html:answer}}></span>
+            {answers.map(answer => (
+               <div key={answer}>
+                  <button disabled={!!userAnswer} onClick={callback} value={answer}>
+                     <span dangerouslySetInnerHTML={{ __html: answer }}></span>
                   </button>
                </div>
             ))}
